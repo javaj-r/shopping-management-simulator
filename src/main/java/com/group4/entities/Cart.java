@@ -7,7 +7,7 @@ import java.util.List;
  * @author javid
  * Created on 1/30/2022
  */
-public class Cart {
+public class Cart extends BaseEntity {
 
     private Customer costumer;
     private String address;
