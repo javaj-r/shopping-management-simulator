@@ -9,8 +9,17 @@ import java.util.List;
  */
 public class Category extends BaseEntity {
 
+    private String name;
     private Category parentCategory;
     private List<Product> products = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Category getParentCategory() {
         return parentCategory;
