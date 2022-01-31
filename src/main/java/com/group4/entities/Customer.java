@@ -7,7 +7,7 @@ import java.util.List;
  * @author javid
  * Created on 1/30/2022
  */
-public class Customer {
+public class Customer extends User {
 
     private String firstName;
     private String lastName;
