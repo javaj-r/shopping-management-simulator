@@ -150,4 +150,50 @@ public class ProductRepositoryImpl implements ProductRepository {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Product> findAllByCategory(Category category) {
+        Connection connection = postgresConnection.getConnection();
+        List<Product> products = new ArrayList<>();
+        String query = """
+                WITH RECURSIVE q AS (
+                    SELECT c.id, c.name, c.parent_id
+                    FROM category c
+                    WHERE id = ?
+                    UNION ALL
+                    SELECT c.id, c.name, c.parent_id
+                    FROM category c
+                             JOIN q ON c.parent_ID = q.id
+                )
+                SELECT q.id qid, q.name qname, q.parent_id, p.id pid, p.price, p.name pname, p.stock
+                FROM q
+                         JOIN product p ON q.id = p.category_id;
+                """;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, category.getId());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Category productCategory = new Category();
+                productCategory.setId(resultSet.getInt("qid"));
+                productCategory.setName(resultSet.getString("qname"));
+
+                Category parentCategory = new Category();
+                int parentId = resultSet.getInt("parent_id");
+                parentCategory.setId(resultSet.wasNull() ? null : parentId);
+                productCategory.setParentCategory(parentCategory);
+
+                Product product = new Product();
+                product.setId(resultSet.getInt("pid"));
+                product.setPrice(resultSet.getInt("price"));
+                product.setCategory(productCategory);
+                product.setName(resultSet.getString("pname"));
+                product.setStock(resultSet.getInt("stock"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 }
