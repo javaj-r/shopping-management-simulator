@@ -163,6 +163,7 @@ public class CartRepositoryImpl implements CartRepository {
                 WHERE id = ?;
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
