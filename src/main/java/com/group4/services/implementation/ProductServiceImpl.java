@@ -3,7 +3,6 @@ package com.group4.services.implementation;
 import com.group4.entities.Category;
 import com.group4.entities.Product;
 import com.group4.repositories.ProductRepository;
-import com.group4.services.CategoryService;
 import com.group4.services.ProductService;
 
 import java.util.List;
@@ -15,11 +14,9 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
-    private final CategoryService categoryService;
 
-    public ProductServiceImpl(ProductRepository repository, CategoryService categoryService) {
+    public ProductServiceImpl(ProductRepository repository) {
         this.repository = repository;
-        this.categoryService = categoryService;
     }
 
     @Override
