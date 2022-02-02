@@ -95,11 +95,15 @@ public class AdminRepositoryImpl implements AdminRepository {
         Connection connection = postgresConnection.getConnection();
         String query = """
                 INSERT INTO admin(username, password)
-                VALUES (?, ?);
+                SELECT ?, ?
+                WHERE not exists(
+                        SELECT * FROM admin WHERE username = ?
+                    );
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
+            statement.setString(3, entity.getUsername());
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
