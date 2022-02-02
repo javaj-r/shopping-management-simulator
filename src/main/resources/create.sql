@@ -37,11 +37,12 @@ CREATE TABLE IF NOT EXISTS category
 CREATE TABLE IF NOT EXISTS product
 (
     id          SERIAL PRIMARY KEY,
+    name        VARCHAR(100),
     price       INTEGER,
+    stock       INTEGER,
     category_id INTEGER,
     CONSTRAINT fk_product_category FOREIGN KEY (category_id) REFERENCES category (id)
 );
-
 
 -- DROP TABLE IF EXISTS product;
 
@@ -66,9 +67,9 @@ CREATE TABLE IF NOT EXISTS cart
     address      TEXT,
     phone_number BIGINT,
     customer_id  INTEGER,
+    done         BOOLEAN,
     CONSTRAINT fk_cart_customer FOREIGN KEY (customer_id) REFERENCES customer (id)
 );
-
 
 -- DROP TABLE IF EXISTS cart;
 

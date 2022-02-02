@@ -42,7 +42,7 @@ public class PostgresConnection {
     }
 
     private void setConnection() {
-        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String url = "jdbc:postgresql://localhost:5432/shopping";
         String user = "postgres";
         String password = "123";
         try {
