@@ -176,10 +176,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         String query = """
                 SELECT id, username, password, firstname, lastname, national_code, email, phone_number
                 FROM customer
-                WHERE id = ?;
+                WHERE username = ?
+                    AND password = ?;
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, customer.getId());
+            statement.setString(1, customer.getUsername());
+            statement.setString(2, customer.getPassword());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Customer fetchedCustomer = new Customer();
