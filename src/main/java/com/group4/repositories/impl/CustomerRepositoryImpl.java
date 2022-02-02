@@ -1,4 +1,4 @@
-package com.group4.repositories.jdbc;
+package com.group4.repositories.impl;
 
 import com.group4.connection.PostgresConnection;
 import com.group4.entities.Customer;

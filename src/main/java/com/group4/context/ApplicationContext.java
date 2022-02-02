@@ -6,9 +6,9 @@ import com.group4.console.CategoryConsole;
 import com.group4.console.CustomerConsole;
 import com.group4.console.ProductConsole;
 import com.group4.repositories.*;
-import com.group4.repositories.jdbc.*;
+import com.group4.repositories.impl.*;
 import com.group4.services.*;
-import com.group4.services.implementation.*;
+import com.group4.services.impl.*;
 
 /**
  * @author javid

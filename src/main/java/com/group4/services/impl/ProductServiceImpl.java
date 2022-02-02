@@ -1,4 +1,4 @@
-package com.group4.services.implementation;
+package com.group4.services.impl;
 
 import com.group4.entities.Category;
 import com.group4.entities.Product;
