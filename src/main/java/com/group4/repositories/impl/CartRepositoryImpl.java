@@ -100,24 +100,31 @@ public class CartRepositoryImpl implements CartRepository {
 
             if (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                StringBuilder builder = new StringBuilder();
-                String updateInsertOne = """
+                String query1 = """
                         WITH rows AS (
                             UPDATE product SET
                             stock = stock - 1
-                            WHERE id = %d
+                            WHERE id = ?
                             AND stock > 0
                             RETURNING 1
                         )
                         INSERT INTO cart_product(cart_id, product_id)
-                        SELECT %d, %d WHERE (SELECT count(*) FROM rows) > 0;
+                        SELECT ?, ? WHERE (SELECT count(*) FROM rows) > 0;
                         """;
-                entity.getProducts().forEach(product ->
-                        builder.append(updateInsertOne.formatted(product.getId(), id, product.getId()))
-                );
-                String query1 = builder.toString();
                 try (PreparedStatement statement1 = connection.prepareStatement(query1)) {
-                    statement1.execute();
+                    entity.getProducts().forEach(product -> {
+                        try {
+                            statement1.clearParameters();
+                            statement1.setInt(1, product.getId());
+                            statement1.setInt(2, id);
+                            statement1.setInt(3, product.getId());
+                            statement1.addBatch();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+                    statement1.executeBatch();
                 }
                 return id;
             }
