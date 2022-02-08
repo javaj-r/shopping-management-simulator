@@ -96,7 +96,7 @@ public class ProductConsole {
         if (product.isNew())
             return;
 
-        String name = Screen.getString("Enter - or new firstname: ");
+        String name = Screen.getString("Enter - or new name: ");
         if (Application.isForUpdate(name))
             product.setName(name);
 

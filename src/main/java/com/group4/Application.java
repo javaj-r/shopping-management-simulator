@@ -33,7 +33,7 @@ public class Application {
     public static int tryAgainOrExit(String header) {
         return Screen.showMenu(header
                 , "Select from menu: ", "Invalid choice."
-                , "Exit to main.", List.of("Try again."));
+                , "Cancel.", List.of("Try again."));
     }
 
     public static int confirmMenu(String item) {
