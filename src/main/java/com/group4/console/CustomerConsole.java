@@ -115,6 +115,9 @@ public class CustomerConsole {
     private void addProductToCart() {
         Product product = ApplicationContext.getProductConsole()
                 .selectByCategory("Select product for adding to cart: ");
+        if (product.isNew())
+            return;
+
         while (true) {
             int num = Screen.getInt("Enter number: ");
             int sum = num + getProductCountInCart(product);

@@ -3,6 +3,7 @@ package com.group4.services.impl;
 import com.group4.entities.Cart;
 import com.group4.repositories.CartRepository;
 import com.group4.services.CartService;
+import com.group4.validation.CartValidation;
 
 /**
  * @author javid
@@ -18,6 +19,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Integer save(Cart entity) {
+        CartValidation.getInstance().validateNotEmpty(entity);
         return repository.save(entity);
     }
 }
