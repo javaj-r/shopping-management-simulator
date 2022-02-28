@@ -23,6 +23,7 @@ public class Customer extends User {
     @Column(length = 100)
     private String lastName;
 
+    @Column(name = "national_code")
     private Long nationalCode;
 
     @Column(length = 100)

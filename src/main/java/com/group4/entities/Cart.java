@@ -3,6 +3,8 @@ package com.group4.entities;
 import com.group4.entities.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,10 +27,20 @@ public class Cart extends BaseEntity<Integer> {
     @Column(columnDefinition = "TEXT")
     private String address;
 
+    @Column(name = "phone_number")
     private Long phoneNumber;
     private boolean done;
 
-    @OneToMany
+    @ManyToMany(cascade=CascadeType.REMOVE)
+    @JoinTable(name = "cart_product",
+            joinColumns = {@JoinColumn(name = "cart_id", unique = false)},
+            inverseJoinColumns = {@JoinColumn(name = "product_id", unique = false)}
+    )
+    @CollectionId(
+            column = @Column(name = "id", columnDefinition = "SERIAL"),
+            type = @Type(type = "int"),
+            generator = "native"
+    )
     private List<Product> products = new ArrayList<>();
 
 }
