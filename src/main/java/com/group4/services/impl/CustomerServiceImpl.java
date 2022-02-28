@@ -2,19 +2,19 @@ package com.group4.services.impl;
 
 import com.group4.entities.Customer;
 import com.group4.repositories.CustomerRepository;
+import com.group4.repositories.base.CrudRepositoryImpl;
 import com.group4.services.CustomerService;
+import com.group4.services.base.BaseServiceImpl;
 import com.group4.validation.UserValidation;
 
 /**
  * @author javid
  * Created on 1/31/2022
  */
-public class CustomerServiceImpl implements CustomerService {
-
-    private final CustomerRepository repository;
+public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer, CustomerRepository> implements CustomerService {
 
     public CustomerServiceImpl(CustomerRepository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
     @Override
