@@ -1,18 +1,18 @@
-package com.group4.entities;
+package com.group4.entities.base;
 
 /**
  * @author javid
  * Created on 1/30/2022
  */
-public class BaseEntity {
+public class BaseEntity<ID> {
 
-    private Integer id;
+    private ID id;
 
-    public Integer getId() {
+    public ID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ID id) {
         this.id = id;
     }
 

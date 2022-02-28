@@ -1,5 +1,7 @@
 package com.group4.entities;
 
+import com.group4.entities.base.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * @author javid
  * Created on 1/30/2022
  */
-public class Category extends BaseEntity {
+public class Category extends BaseEntity<Integer> {
 
     private String name;
     private Category parentCategory;

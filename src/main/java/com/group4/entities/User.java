@@ -1,10 +1,12 @@
 package com.group4.entities;
 
+import com.group4.entities.base.BaseEntity;
+
 /**
  * @author javid
  * Created on 1/30/2022
  */
-public class User extends BaseEntity {
+public class User extends BaseEntity<Integer> {
 
     private String username;
     private String password;

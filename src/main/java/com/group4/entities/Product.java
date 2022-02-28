@@ -1,10 +1,12 @@
 package com.group4.entities;
 
+import com.group4.entities.base.BaseEntity;
+
 /**
  * @author javid
  * Created on 1/30/2022
  */
-public class Product extends BaseEntity {
+public class Product extends BaseEntity<Integer> {
 
     private String name;
     private int price;
