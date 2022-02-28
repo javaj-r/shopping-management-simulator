@@ -1,14 +1,17 @@
 package com.group4.context;
 
+import com.group4.connection.HibernateSessionFactory;
 import com.group4.connection.PostgresConnection;
 import com.group4.console.AdminConsole;
 import com.group4.console.CategoryConsole;
 import com.group4.console.CustomerConsole;
 import com.group4.console.ProductConsole;
 import com.group4.repositories.*;
+import com.group4.repositories.hibernate.impl.CustomerRepositoryImpl;
 import com.group4.repositories.impl.*;
 import com.group4.services.*;
 import com.group4.services.impl.*;
+import org.hibernate.SessionFactory;
 
 /**
  * @author javid
@@ -77,7 +80,11 @@ public class ApplicationContext {
     }
 
     private static CustomerRepository getCustomerRepository() {
-        return new CustomerRepositoryImpl(getPostgresConnection());
+        return new CustomerRepositoryImpl(getSessionFactory());
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return HibernateSessionFactory.getInstance();
     }
 
 }
