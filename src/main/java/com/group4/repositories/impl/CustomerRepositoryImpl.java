@@ -3,6 +3,7 @@ package com.group4.repositories.impl;
 import com.group4.connection.PostgresConnection;
 import com.group4.entities.Customer;
 import com.group4.repositories.CustomerRepository;
+import com.group4.repositories.base.CrudRepositoryImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +13,10 @@ import java.util.List;
  * @author javid
  * Created on 1/31/2022
  */
-public class CustomerRepositoryImpl implements CustomerRepository {
-
-    private final PostgresConnection postgresConnection;
+public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer> implements CustomerRepository {
 
     public CustomerRepositoryImpl(PostgresConnection postgresConnection) {
-        this.postgresConnection = postgresConnection;
+        super(postgresConnection);
     }
 
     @Override

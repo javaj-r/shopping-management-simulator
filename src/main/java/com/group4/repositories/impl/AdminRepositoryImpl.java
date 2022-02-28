@@ -3,6 +3,7 @@ package com.group4.repositories.impl;
 import com.group4.connection.PostgresConnection;
 import com.group4.entities.Admin;
 import com.group4.repositories.AdminRepository;
+import com.group4.repositories.base.CrudRepositoryImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +13,10 @@ import java.util.List;
  * @author javid
  * Created on 1/31/2022
  */
-public class AdminRepositoryImpl implements AdminRepository {
-
-    private final PostgresConnection postgresConnection;
+public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> implements AdminRepository {
 
     public AdminRepositoryImpl(PostgresConnection postgresConnection) {
-        this.postgresConnection = postgresConnection;
+        super(postgresConnection);
     }
 
     @Override

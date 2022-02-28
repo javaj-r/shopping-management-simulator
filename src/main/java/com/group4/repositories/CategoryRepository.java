@@ -1,6 +1,7 @@
 package com.group4.repositories;
 
 import com.group4.entities.Category;
+import com.group4.repositories.base.CrudRepository;
 
 import java.util.List;
 
