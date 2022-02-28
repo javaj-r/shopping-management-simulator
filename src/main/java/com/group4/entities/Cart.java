@@ -1,7 +1,10 @@
 package com.group4.entities;
 
 import com.group4.entities.base.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,51 +12,23 @@ import java.util.List;
  * @author javid
  * Created on 1/30/2022
  */
+
+@Getter
+@Setter
+@Entity
 public class Cart extends BaseEntity<Integer> {
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer costumer;
+
+    @Column(columnDefinition = "TEXT")
     private String address;
+
     private Long phoneNumber;
-    private List<Product> products = new ArrayList<>();
     private boolean done;
 
-    public Customer getCostumer() {
-        return costumer;
-    }
+    @OneToMany
+    private List<Product> products = new ArrayList<>();
 
-    public void setCostumer(Customer costumer) {
-        this.costumer = costumer;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Long phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
 }
