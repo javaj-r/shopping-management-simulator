@@ -1,6 +1,6 @@
 package com.group4.validation;
 
-import com.group4.entities.BaseEntity;
+import com.group4.entities.base.BaseEntity;
 import com.group4.entities.User;
 import com.group4.validation.exception.ValidationException;
 
@@ -44,7 +44,7 @@ public class UserValidation {
         }
     }
 
-    public void validateNotNullEntity(BaseEntity entity) {
+    public void validateNotNullEntity(BaseEntity<Integer> entity) {
         if (entity == null) {
             throw new ValidationException("Entity is null.");
         }
