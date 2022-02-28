@@ -38,8 +38,7 @@ public class CategoryConsole {
 
     public Category select(String message) {
         List<Category> categories = categoryService.findAll();
-        List<String> items = new ArrayList<>();
-        items.addAll(categories.stream()
+        List<String> items = new ArrayList<>(categories.stream()
                 .map(Category::getName)
                 .toList());
 
@@ -53,7 +52,7 @@ public class CategoryConsole {
 
     private Category createCategory() {
         Category category = new Category();
-        category.setName(Screen.getString("Enter product name: "));
+        category.setName(Screen.getString("Enter category name: "));
         category.setParentCategory(selectOrAdd("Select parent category from list: "));
         if (Application.confirmMenu("Save category") > 0) {
             category.setId(categoryService.save(category));
