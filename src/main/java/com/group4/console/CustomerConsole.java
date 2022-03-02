@@ -89,8 +89,12 @@ public class CustomerConsole {
             }
 
             switch (choice) {
-                case 1 -> addProductToCart();
-                case 2 -> payCart();
+                case 1:
+                    addProductToCart();
+                    break;
+                case 2:
+                    payCart();
+                    break;
             }
         }
     }

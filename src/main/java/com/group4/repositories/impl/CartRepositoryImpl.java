@@ -24,9 +24,7 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
     public List<Cart> findAll() {
         Connection connection = postgresConnection.getConnection();
         List<Cart> carts = new ArrayList<>();
-        String query = """
-                SELECT id, address, phone_number, customer_id, done FROM cart;
-                """;
+        String query = "SELECT id, address, phone_number, customer_id, done FROM cart;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -52,10 +50,9 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
     @Override
     public Cart findById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, address, phone_number, customer_id, done FROM cart
-                WHERE id = ?;
-                """;
+        String query =
+                "SELECT id, address, phone_number, customer_id, done FROM cart"
+                        + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -81,10 +78,8 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
     @Override
     public Integer save(Cart entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                INSERT INTO cart (address, phone_number, customer_id, done)
-                VALUES (?, ?, ?, ?);
-                """;
+        String query = "INSERT INTO cart (address, phone_number, customer_id, done)"
+                + "\n VALUES (?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getAddress());
             if (entity.getPhoneNumber() == null) {
@@ -99,18 +94,16 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
 
             if (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String query1 = """
-                        WITH rows AS (
-                            UPDATE product SET
-                            stock = stock - 1
-                            WHERE id = ?
-                            AND stock > 0
-                            RETURNING 1
-                        )
-                        INSERT INTO cart_product(cart_id, product_id)
-                        SELECT ?, ? WHERE (SELECT count(*) FROM rows) > 0;
-                        """;
-                try (PreparedStatement statement1 = connection.prepareStatement(query1)) {
+                String query1 = "WITH rows AS ("
+                        + "\n     UPDATE product SET"
+                        + "\n     stock = stock - 1"
+                        + "\n     WHERE id = ?"
+                        + "\n     AND stock > 0"
+                        + "\n     RETURNING 1"
+                        + "\n )"
+                        + "\n INSERT INTO cart_product(cart_id, product_id)"
+                        + "\n SELECT ?, ? WHERE (SELECT count(*) FROM rows) > 0;";
+                 try (PreparedStatement statement1 = connection.prepareStatement(query1)) {
                     entity.getProducts().forEach(product -> {
                         try {
                             statement1.clearParameters();
@@ -137,14 +130,12 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
     @Override
     public void update(Cart entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                UPDATE cart SET
-                address = ?,
-                phone_number = ?,
-                customer_id = ?,
-                done = ?
-                WHERE id = ?;
-                """;
+        String query = "UPDATE cart SET"
+                + "\n address = ?,"
+                + "\n phone_number = ?,"
+                + "\n customer_id = ?,"
+                + "\n done = ?"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, entity.getAddress());
             if (entity.getPhoneNumber() == null) {
@@ -164,10 +155,8 @@ public class CartRepositoryImpl extends CrudRepositoryImpl<Cart, Integer> implem
     @Override
     public void deleteById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                DELETE FROM cart
-                WHERE id = ?;
-                """;
+        String query = "DELETE FROM cart"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.execute();

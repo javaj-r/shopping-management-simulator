@@ -6,6 +6,7 @@ import com.group4.services.CategoryService;
 import com.group4.util.Screen;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author javid
@@ -25,7 +26,7 @@ public class CategoryConsole {
         items.add("Add new category");
         items.addAll(categories.stream()
                 .map(Category::getName)
-                .toList());
+                .collect(Collectors.toList()));
 
         int choice = Screen.showMenu(message, "Cancel", items);
         if (choice == 0) {
@@ -38,9 +39,8 @@ public class CategoryConsole {
 
     public Category select(String message) {
         List<Category> categories = categoryService.findAll();
-        List<String> items = new ArrayList<>(categories.stream()
-                .map(Category::getName)
-                .toList());
+        List<String> items = categories.stream()
+                .map(Category::getName).collect(Collectors.toList());
 
         int choice = Screen.showMenu(message, "Cancel", items);
         if (choice == 0) {

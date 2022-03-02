@@ -22,11 +22,9 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     @Override
     public Admin findByUsernameAndPassword(Admin admin) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, username, password FROM admin
-                WHERE username = ?
-                AND password = ?;
-                """;
+        String query = "SELECT id, username, password FROM admin"
+                + "\n WHERE username = ?"
+                + "\n AND password = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, admin.getUsername());
             statement.setString(2, admin.getPassword());
@@ -48,9 +46,7 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     public List<Admin> findAll() {
         Connection connection = postgresConnection.getConnection();
         List<Admin> admins = new ArrayList<>();
-        String query = """
-                SELECT id, username, password FROM admin;
-                """;
+        String query = "SELECT id, username, password FROM admin;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -69,10 +65,8 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     @Override
     public Admin findById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, username, password FROM admin
-                WHERE id = ?;
-                """;
+        String query = "SELECT id, username, password FROM admin"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -92,13 +86,11 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     @Override
     public Integer save(Admin entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                INSERT INTO admin(username, password)
-                SELECT ?, ?
-                WHERE not exists(
-                        SELECT * FROM admin WHERE username = ?
-                    );
-                """;
+        String query = "INSERT INTO admin(username, password)"
+                + "\n SELECT ?, ?"
+                + "\n WHERE not exists("
+                + "\n         SELECT * FROM admin WHERE username = ?"
+                + "\n     );";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
@@ -117,12 +109,10 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     @Override
     public void update(Admin entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                UPDATE admin SET
-                    username = ?,
-                    password = ?
-                WHERE id = ?;
-                """;
+        String query = "UPDATE admin SET"
+                + "\n username = ?,"
+                + "\n password = ?"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
@@ -136,10 +126,8 @@ public class AdminRepositoryImpl extends CrudRepositoryImpl<Admin, Integer> impl
     @Override
     public void deleteById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                DELETE FROM admin
-                WHERE id = ?;
-                """;
+        String query = "DELETE FROM admin"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.execute();

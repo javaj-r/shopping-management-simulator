@@ -9,6 +9,7 @@ import com.group4.util.Screen;
 import com.group4.validation.exception.ValidationException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author javid
@@ -54,7 +55,7 @@ public class ProductConsole {
     public Product select(String message, List<Product> products) {
         List<String> items = products.stream()
                 .map(this::getStringProduct)
-                .toList();
+                .collect(Collectors.toList());
 
         int choice = Screen.showMenu(message, "Cancel", items);
         if (choice == 0) {

@@ -23,11 +23,9 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     public List<Category> findAllChildes(Category category) {
         Connection connection = postgresConnection.getConnection();
         List<Category> categories = new ArrayList<>();
-        String query = """ 
-                SELECT id, name, parent_id
-                FROM category
-                WHERE parent_id = ?;
-                """;
+        String query = "SELECT id, name, parent_id"
+                + "\n FROM category"
+                + "\n WHERE parent_id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, category.getId());
             ResultSet resultSet = statement.executeQuery();
@@ -49,10 +47,8 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     public List<Category> findAll() {
         Connection connection = postgresConnection.getConnection();
         List<Category> categories = new ArrayList<>();
-        String query = """ 
-                SELECT id, name, parent_id
-                FROM category;
-                """;
+        String query = "SELECT id, name, parent_id"
+                + "\n FROM category;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -75,11 +71,9 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     @Override
     public Category findById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """ 
-                SELECT id, name, parent_id
-                FROM category
-                WHERE id = ?;
-                """;
+        String query = "SELECT id, name, parent_id"
+                + "\n FROM category"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -103,10 +97,8 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     @Override
     public Integer save(Category entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                INSERT INTO category (name, parent_id)
-                VALUES (?, ?);
-                """;
+        String query = "INSERT INTO category (name, parent_id)"
+                + "\n VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getName());
             if (entity.getParentCategory() == null || entity.getParentCategory().isNew()) {
@@ -129,12 +121,10 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     @Override
     public void update(Category entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                UPDATE category SET
-                name = ?,
-                parent_id = ?
-                WHERE id = ?;
-                """;
+        String query = "UPDATE category SET"
+                + "\n name = ?,"
+                + "\n parent_id = ?"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, entity.getName());
             if (entity.getParentCategory() == null || entity.getParentCategory().isNew()) {
@@ -152,10 +142,8 @@ public class CategoryRepositoryImpl extends CrudRepositoryImpl<Category, Integer
     @Override
     public void deleteById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                DELETE  FROM category
-                WHERE id = ?;
-                """;
+        String query = "DELETE  FROM category"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.execute();

@@ -20,9 +20,15 @@ public class Application {
                     break;
 
                 switch (choice) {
-                    case 1 -> ApplicationContext.getAdminConsole().login();
-                    case 2 -> ApplicationContext.getCustomerConsole().signup();
-                    case 3 -> ApplicationContext.getCustomerConsole().login();
+                    case 1:
+                        ApplicationContext.getAdminConsole().login();
+                        break;
+                    case 2:
+                        ApplicationContext.getCustomerConsole().signup();
+                        break;
+                    case 3:
+                        ApplicationContext.getCustomerConsole().login();
+                        break;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

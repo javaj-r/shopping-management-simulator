@@ -5,6 +5,7 @@ import com.group4.entities.User;
 import com.group4.validation.exception.ValidationException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author javid
@@ -37,7 +38,7 @@ public class UserValidation {
         List<String> userNames = users.stream()
                 .map(User::getUsername)
                 .filter(s -> s.equalsIgnoreCase(newUser.getUsername()))
-                .toList();
+                .collect(Collectors.toList());
 
         if (!userNames.isEmpty()){
             throw new ValidationException("Username already exists.");

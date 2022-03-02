@@ -40,7 +40,6 @@ class CustomerRepositoryIT {
         customer2.setEmail("c2@gmail.com");
         customer2.setNationalCode(2222L);
         customer2.setPhoneNumber(222222L);
-//        DELETE FROM enityName
     }
 
     @AfterEach

@@ -67,9 +67,16 @@ public class AdminConsole {
                 break;
 
             switch (choice) {
-                case 1 -> ApplicationContext.getProductConsole().showAll();
-                case 2 -> ApplicationContext.getProductConsole().create();
-                case 3 -> ApplicationContext.getProductConsole().update();
+                case 1:
+                    ApplicationContext.getProductConsole().showAll();
+                    break;
+                case 2:
+                    ApplicationContext.getProductConsole().create();
+                    break;
+                case 3:
+                    ApplicationContext.getProductConsole().update();
+                    break;
+
             }
         }
     }

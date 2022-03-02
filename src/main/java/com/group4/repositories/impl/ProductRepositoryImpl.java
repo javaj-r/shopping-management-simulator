@@ -24,10 +24,8 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     public List<Product> findAll() {
         Connection connection = postgresConnection.getConnection();
         List<Product> products = new ArrayList<>();
-        String query = """
-                SELECT id, price, category_id, name, stock
-                FROM product;
-                """;
+        String query = "SELECT id, price, category_id, name, stock"
+                + "\n FROM product;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -52,11 +50,9 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     @Override
     public Product findById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, price, category_id, name, stock
-                FROM product
-                WHERE id = ?;
-                """;
+        String query = "SELECT id, price, category_id, name, stock"
+                + "\n FROM product"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -82,10 +78,8 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     @Override
     public Integer save(Product entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                INSERT INTO product (price, category_id, name, stock)
-                VALUES (?, ?, ?, ?);
-                """;
+        String query = "INSERT INTO product (price, category_id, name, stock)"
+                + "\n VALUES (?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, entity.getPrice());
             if (entity.getCategory() == null || entity.getCategory().isNew()) {
@@ -111,14 +105,12 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     public void update(Product entity) {
 
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                UPDATE product SET
-                price = ?,
-                category_id = ?,
-                name = ?,
-                stock = ?
-                WHERE id = ?;
-                """;
+        String query = "UPDATE product SET"
+                + "\n price = ?,"
+                + "\n category_id = ?,"
+                + "\n name = ?,"
+                + "\n stock = ?"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, entity.getPrice());
             if (entity.getCategory() == null || entity.getCategory().isNew()) {
@@ -138,10 +130,8 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     @Override
     public void deleteById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                DELETE  FROM product
-                WHERE id = ?;
-                """;
+        String query = "DELETE  FROM product"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.execute();
@@ -154,20 +144,18 @@ public class ProductRepositoryImpl extends CrudRepositoryImpl<Product, Integer> 
     public List<Product> findAllByCategory(Category category) {
         Connection connection = postgresConnection.getConnection();
         List<Product> products = new ArrayList<>();
-        String query = """
-                WITH RECURSIVE q AS (
-                    SELECT c.id, c.name, c.parent_id
-                    FROM category c
-                    WHERE id = ?
-                    UNION ALL
-                    SELECT c.id, c.name, c.parent_id
-                    FROM category c
-                             JOIN q ON c.parent_ID = q.id
-                )
-                SELECT q.id qid, q.name qname, q.parent_id, p.id pid, p.price, p.name pname, p.stock
-                FROM q
-                         JOIN product p ON q.id = p.category_id;
-                """;
+        String query = "WITH RECURSIVE q AS ("
+                + "\n     SELECT c.id, c.name, c.parent_id"
+                + "\n     FROM category c"
+                + "\n     WHERE id = ?"
+                + "\n     UNION ALL"
+                + "\n     SELECT c.id, c.name, c.parent_id"
+                + "\n     FROM category c"
+                + "\n              JOIN q ON c.parent_ID = q.id"
+                + "\n )"
+                + "\n SELECT q.id qid, q.name qname, q.parent_id, p.id pid, p.price, p.name pname, p.stock"
+                + "\n FROM q"
+                + "\n          JOIN product p ON q.id = p.category_id;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, category.getId());
             ResultSet resultSet = statement.executeQuery();

@@ -23,10 +23,8 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     public List<Customer> findAll() {
         Connection connection = postgresConnection.getConnection();
         List<Customer> customers = new ArrayList<>();
-        String query = """
-                SELECT id, username, password, firstname, lastname, national_code, email, phone_number
-                FROM customer;
-                """;
+        String query = "SELECT id, username, password, firstname, lastname, national_code, email, phone_number"
+                + "\n FROM customer;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -53,11 +51,9 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     @Override
     public Customer findById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, username, password, firstname, lastname, national_code, email, phone_number
-                FROM customer
-                WHERE id = ?;
-                """;
+        String query = "SELECT id, username, password, firstname, lastname, national_code, email, phone_number"
+                + "\n FROM customer"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -85,10 +81,8 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     @Override
     public Integer save(Customer entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                INSERT INTO customer (username, password, firstname, lastname, national_code, email, phone_number)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-                """;
+        String query = "INSERT INTO customer (username, password, firstname, lastname, national_code, email, phone_number)"
+                + "\n VALUES (?, ?, ?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
@@ -120,17 +114,15 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     @Override
     public void update(Customer entity) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                UPDATE customer SET
-                    username = ?,
-                    password = ?,
-                    firstname = ?,
-                    lastname = ?,
-                    national_code = ?,
-                    email = ?,
-                    phone_number = ?
-                WHERE id = ?;
-                """;
+        String query = "UPDATE customer SET"
+                + "\n     username = ?,"
+                + "\n     password = ?,"
+                + "\n     firstname = ?,"
+                + "\n     lastname = ?,"
+                + "\n     national_code = ?,"
+                + "\n     email = ?,"
+                + "\n     phone_number = ?"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
@@ -157,10 +149,8 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     @Override
     public void deleteById(Integer id) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                DELETE  FROM customer
-                WHERE id = ?;
-                """;
+        String query = "DELETE  FROM customer"
+                + "\n WHERE id = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             statement.execute();
@@ -172,12 +162,10 @@ public class CustomerRepositoryImpl extends CrudRepositoryImpl<Customer, Integer
     @Override
     public Customer findByUsernameAndPassword(Customer customer) {
         Connection connection = postgresConnection.getConnection();
-        String query = """
-                SELECT id, username, password, firstname, lastname, national_code, email, phone_number
-                FROM customer
-                WHERE username = ?
-                    AND password = ?;
-                """;
+        String query = "SELECT id, username, password, firstname, lastname, national_code, email, phone_number"
+                + "\n FROM customer"
+                + "\n WHERE username = ?"
+                + "\n     AND password = ?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());
